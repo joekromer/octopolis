@@ -135,6 +135,7 @@ body:has(button:hover) .cursor-glow {
 .hero {
   position: relative;
   height: 100vh;
+  min-height: 620px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -151,29 +152,58 @@ body:has(button:hover) .cursor-glow {
   position: absolute;
   inset: 0;
   z-index: 1;
+  pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 40%, transparent 30%, var(--bg-surface) 100%),
-    linear-gradient(to bottom, transparent 50%, var(--bg-surface) 100%);
+    radial-gradient(ellipse 46% 44% at 50% 50%, rgba(3,1,10,0.95) 0%, rgba(3,1,10,0.8) 48%, rgba(3,1,10,0) 80%),
+    linear-gradient(to bottom, rgba(4,1,13,0.62) 0%, transparent 24%, transparent 64%, var(--bg-surface) 100%);
+}
+@media (max-width: 880px) {
+  .hero-gradient {
+    background:
+      radial-gradient(ellipse 82% 40% at 50% 50%, rgba(3,1,10,0.96) 0%, rgba(3,1,10,0.84) 55%, rgba(3,1,10,0.18) 88%),
+      linear-gradient(to bottom, rgba(4,1,13,0.7) 0%, transparent 30%, transparent 60%, var(--bg-surface) 100%);
+  }
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: none;
+}
+.hero-octopus {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  opacity: 0.82;
+  filter: drop-shadow(0 0 55px rgba(20,184,166,0.2));
+  pointer-events: none;
+}
+@media (max-width: 880px) {
+  .hero-octopus { opacity: 0.7; filter: drop-shadow(0 0 28px rgba(20,184,166,0.16)); }
 }
 .hero-content {
   position: relative;
   z-index: 2;
   text-align: center;
-  max-width: 800px;
+  max-width: 600px;
   padding: 0 24px;
 }
 .hero-overline {
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.8vw, 2.1rem);
   color: var(--peach);
-  margin-bottom: 24px;
-  font-weight: 500;
+  margin-bottom: 12px;
+  font-weight: 400;
+  line-height: 1.2;
 }
-.hero-overline a { color: var(--peach); text-decoration: none; }
+.hero-overline a { color: var(--peach); text-decoration: underline; text-underline-offset: 3px; }
 .hero-logo {
-  width: min(280px, 60vw);
-  margin: 0 auto 32px;
+  width: min(310px, 66vw);
+  margin: 0 auto 20px;
   display: block;
 }
 .hero-title {
@@ -185,12 +215,12 @@ body:has(button:hover) .cursor-glow {
   will-change: transform;
 }
 .hero-tagline {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(1rem, 1.6vw, 1.16rem);
   font-weight: 300;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  max-width: 520px;
-  margin: 0 auto 40px;
+  color: rgba(241,232,255,0.86);
+  line-height: 1.75;
+  max-width: 470px;
+  margin: 0 auto 32px;
 }
 .hero-cta {
   display: inline-flex;
@@ -554,13 +584,14 @@ section {
   margin-top: 60px;
 }
 .event-card {
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(124,58,237,0.32);
   border-radius: var(--radius);
   padding: 32px 28px;
-  background: var(--bg-card);
+  background: rgba(124,58,237,0.20);
   backdrop-filter: blur(20px);
-  transition: transform 0.4s;
+  transition: transform 0.4s, border-color 0.4s;
 }
+.event-card:hover { border-color: rgba(192,38,211,0.5); }
 .event-card:hover { transform: translateY(-3px); }
 .event-date {
   font-size: 0.7rem;
@@ -889,7 +920,7 @@ section {
     <a href="#process">Build</a>
     <a href="#tiers">Support</a>
     <a href="#events">Events</a>
-    <a href="#volunteer">Volunteer</a>
+    <a href="#get-involved">Get Involved</a>
     <a href="team.html">Team</a>
     <a href="knowledge.html">Knowledge</a>
   </div>
@@ -897,7 +928,9 @@ section {
 
 <!-- ─── HERO ─── -->
 <section class="hero" id="hero">
-  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-bg" id="heroBg">
+    <object class="hero-octopus" type="image/svg+xml" data="octopus.svg" aria-label="Octopolis — an illuminated octopus sculpture, hand-drawn"></object>
+  </div>
   <div class="hero-gradient"></div>
   <div class="hero-content">
     <p class="hero-overline reveal">A <a href="https://www.big-art.org/home" target="_blank">Big Art</a> Project &mdash; Burning Man 2026</p>
@@ -910,6 +943,413 @@ section {
     <div class="scroll-line"></div>
   </div>
 </section>
+
+<!-- ─── GET INVOLVED — PARTICIPATION CHOOSER (added May 2026) ─── -->
+<section id="get-involved">
+  <div class="gi-wrap">
+    <h2 class="gi-title">Be part of Octopolis.</h2>
+    <p class="gi-intro">Two ways in: lend your hands to the build, or help fund her journey from playa to ocean floor. Choose your path.</p>
+
+    <div class="gi-choices">
+      <button class="gi-choice" data-panel="volunteer" type="button">
+        <span class="gi-choice-k">Give time</span>
+        <span class="gi-choice-h">I want to volunteer</span>
+        <span class="gi-choice-d">Build, promote, transport, organize &mdash; on-site or remote. Every skill has a place.</span>
+        <span class="gi-choice-go">Choose this &rarr;</span>
+      </button>
+      <button class="gi-choice" data-panel="donate" type="button">
+        <span class="gi-choice-k">Give support</span>
+        <span class="gi-choice-h">I want to donate</span>
+        <span class="gi-choice-d">Fund the structure, the tech, the transport, and her second life as a reef.</span>
+        <span class="gi-choice-go">Choose this &rarr;</span>
+      </button>
+    </div>
+
+    <!-- VOLUNTEER PANEL -->
+    <div class="gi-panel" id="gi-panel-volunteer">
+      <div class="gi-panel-inner">
+        <h3 class="gi-panel-title">Tell us how you'd like to help</h3>
+        <p class="gi-panel-sub">Answer below and it goes straight to the Octopolis crew &mdash; no extra forms, no redirects.</p>
+        <form id="gi-vol-form" class="gi-form">
+          <input type="text" name="name" class="gi-input" placeholder="Your name (optional)">
+          <input type="email" name="email" class="gi-input" placeholder="Email" required>
+          <fieldset class="gi-fieldset">
+            <legend>How would you like to help?</legend>
+            <label class="gi-radio"><input type="radio" name="help" value="I can help to promote"><span>I can help promote the project</span></label>
+            <label class="gi-radio"><input type="radio" name="help" value="I can help to build (and have experience)"><span>I can help build &mdash; I have experience</span></label>
+            <label class="gi-radio"><input type="radio" name="help" value="I can help to build (and have np experience)"><span>I can help build &mdash; no experience needed</span></label>
+            <label class="gi-radio"><input type="radio" name="help" value="I can help with transport"><span>I can help with transport</span></label>
+            <label class="gi-radio"><input type="radio" name="help" value="I can help with funding"><span>I can help with funding</span></label>
+          </fieldset>
+          <button type="submit" class="gi-submit">Send &rarr;</button>
+          <p class="gi-status" id="gi-vol-status"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- DONATE PANEL -->
+    <div class="gi-panel" id="gi-panel-donate">
+      <div class="gi-panel-inner">
+        <div class="gi-donate-grid">
+          <div class="gi-donate-card">
+            <h3 class="gi-panel-title">Make a donation</h3>
+            <p class="gi-panel-sub">Every contribution &mdash; any size &mdash; moves Octopolis closer. Quick and secure through GoFundMe.</p>
+            <a href="https://www.gofundme.com/f/octopolis-come-to-life" target="_blank" rel="noopener" class="gi-btn gi-btn-primary">Donate via GoFundMe &rarr;</a>
+          </div>
+          <div class="gi-donate-card">
+            <h3 class="gi-panel-title">Make a larger gift</h3>
+            <p class="gi-panel-sub">Giving $500 or more? Share a few details and we'll follow up personally to arrange it &mdash; including patron perks and tax-deductible receipts through our fiscal sponsor.</p>
+            <form id="gi-don-form" class="gi-form">
+              <input type="text" name="name" class="gi-input" placeholder="Your name" required>
+              <input type="email" name="email" class="gi-input" placeholder="Email" required>
+              <div class="gi-row">
+                <input type="text" name="amount" class="gi-input" placeholder="Amount (e.g. 1,000)" required>
+                <select name="currency" class="gi-input gi-select" aria-label="Currency">
+                  <option value="USD">USD $</option>
+                  <option value="EUR">EUR &euro;</option>
+                  <option value="GBP">GBP &pound;</option>
+                  <option value="Crypto">Crypto</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <textarea name="message" class="gi-input gi-textarea" placeholder="Anything we should know? (which tier you're interested in, tax-deductible receipt, how you'd like to give...)"></textarea>
+              <button type="submit" class="gi-submit">Send gift details &rarr;</button>
+              <p class="gi-status" id="gi-don-status"></p>
+            </form>
+          </div>
+        </div>
+        <p class="gi-perklink">Larger gifts come with patron perks &mdash; <a href="#tiers">see all patron tiers &darr;</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+/* ═══ GET INVOLVED CHOOSER ═══ */
+#get-involved{padding:108px 40px 120px;background:linear-gradient(180deg,#0d0520 0%,#140934 52%,#0d0520 100%);position:relative;z-index:3;}
+#get-involved *{box-sizing:border-box;}
+.gi-wrap{max-width:1000px;margin:0 auto;text-align:center;}
+.gi-eyebrow{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;}
+.gi-title{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.7rem);color:var(--text-primary);line-height:1.1;margin-bottom:16px;}
+.gi-intro{font-size:1.02rem;font-weight:300;color:var(--text-secondary);line-height:1.7;max-width:560px;margin:0 auto 44px;}
+.gi-choices{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.gi-choice{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;cursor:pointer;padding:30px 28px;border-radius:18px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);font-family:inherit;transition:transform .25s ease,border-color .25s ease,background .25s ease;}
+.gi-choice:hover{transform:translateY(-4px);border-color:rgba(192,38,211,.55);background:rgba(124,58,237,.1);}
+.gi-choice.gi-active{border-color:var(--magenta);background:rgba(192,38,211,.12);box-shadow:0 0 0 1px rgba(192,38,211,.4);}
+.gi-choice-k{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--peach);}
+.gi-choice-h{font-size:1.5rem;font-weight:600;color:var(--text-primary);}
+.gi-choice-d{font-size:.92rem;font-weight:300;color:var(--text-secondary);line-height:1.55;}
+.gi-choice-go{margin-top:6px;font-size:.78rem;font-weight:600;color:var(--magenta);letter-spacing:.03em;}
+.gi-panel{display:none;margin-top:24px;}
+.gi-panel.gi-open{display:block;animation:giIn .35s ease;}
+@keyframes giIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.gi-panel-inner{background:rgba(13,5,32,.6);border:1px solid rgba(124,58,237,.25);border-radius:18px;padding:34px 30px;text-align:left;}
+.gi-panel-title{font-size:1.25rem;font-weight:600;color:var(--text-primary);margin-bottom:6px;}
+.gi-panel-sub{font-size:.92rem;font-weight:300;color:var(--text-secondary);line-height:1.6;margin-bottom:22px;}
+.gi-form{display:flex;flex-direction:column;gap:14px;}
+.gi-input{width:100%;padding:13px 16px;border-radius:9px;font-family:inherit;font-size:.95rem;font-weight:300;background:rgba(13,5,32,.7);border:1px solid rgba(124,58,237,.28);color:var(--text-primary);}
+.gi-input::placeholder{color:rgba(241,232,255,.4);}
+.gi-input:focus{outline:none;border-color:var(--magenta);box-shadow:0 0 0 3px rgba(192,38,211,.15);}
+.gi-select{cursor:pointer;}
+.gi-textarea{min-height:84px;resize:vertical;}
+.gi-row{display:flex;gap:12px;}
+.gi-row .gi-input{flex:1;}
+.gi-row .gi-select{flex:0 0 132px;}
+.gi-fieldset{border:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;}
+.gi-fieldset legend{font-size:.9rem;font-weight:300;color:var(--text-secondary);margin-bottom:6px;padding:0;}
+.gi-radio{display:flex;align-items:flex-start;gap:11px;cursor:pointer;color:var(--text-primary);font-weight:300;font-size:.92rem;line-height:1.4;padding:11px 14px;border-radius:9px;border:1px solid rgba(124,58,237,.16);background:rgba(13,5,32,.45);transition:border-color .2s,background .2s;}
+.gi-radio:hover{border-color:rgba(124,58,237,.45);}
+.gi-radio input{accent-color:var(--magenta);margin-top:2px;flex-shrink:0;}
+.gi-radio:has(input:checked){border-color:var(--magenta);background:rgba(192,38,211,.09);}
+.gi-submit{align-self:flex-start;padding:14px 32px;border:none;border-radius:100px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600;letter-spacing:.04em;color:#fff;background:linear-gradient(135deg,var(--purple),var(--magenta));transition:transform .2s ease;}
+.gi-submit:hover{transform:translateY(-2px);}
+.gi-submit:disabled{opacity:.6;cursor:default;transform:none;}
+.gi-status{font-size:.85rem;font-style:italic;color:var(--text-muted);min-height:1.1em;margin:0;}
+.gi-status.gi-ok{color:#5eead4;font-style:normal;}
+.gi-status.gi-err{color:#fda4af;font-style:normal;}
+.gi-donate-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.gi-donate-card{background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.18);border-radius:14px;padding:26px 24px;}
+.gi-btn{display:inline-flex;align-items:center;gap:7px;padding:14px 30px;border-radius:100px;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.04em;transition:transform .2s ease;}
+.gi-btn-primary{background:linear-gradient(135deg,var(--purple),var(--magenta));color:#fff;}
+.gi-btn-primary:hover{transform:translateY(-2px);}
+.gi-perklink{margin:24px 0 0;font-size:.85rem;color:var(--text-secondary);font-weight:300;}
+.gi-perklink a{color:var(--peach);text-decoration:none;font-weight:600;}
+@media(max-width:760px){
+  #get-involved{padding:78px 22px 88px;}
+  .gi-choices{grid-template-columns:1fr;}
+  .gi-donate-grid{grid-template-columns:1fr;}
+  .gi-panel-inner{padding:26px 20px;}
+  .gi-row{flex-direction:column;}
+  .gi-row .gi-select{flex:1;}
+}
+</style>
+<script>
+(function(){
+  'use strict';
+  var VOL_FORM="https://docs.google.com/forms/d/e/1FAIpQLSfe7VcvjdZpIdJnaAa2xvJKguRoZy00bWsLpmnCGo791BL_Vg/formResponse";
+  var VOL_FIELDS={name:"entry.1409903862",email:"entry.278207183",help:"entry.645217266"};
+
+  /* ─── LARGER-GIFT DONATION FORM ───────────────────────────────────────
+     Until the dedicated donation Google Form exists, submissions open the
+     visitor's email app addressed to the team. After creating the form
+     (see DONATION_FORM_SETUP.md in this folder), paste the 6 values below
+     and submissions will collect straight into the donation Google Sheet. */
+  var DONATION_FORM={
+    formId:"",          /* e.g. "1FAIpQLSxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" */
+    field_name:"",      /* e.g. "entry.1111111111" */
+    field_email:"",     /* e.g. "entry.2222222222" */
+    field_amount:"",    /* e.g. "entry.3333333333" */
+    field_currency:"",  /* e.g. "entry.4444444444" */
+    field_message:""    /* e.g. "entry.5555555555" */
+  };
+  var DONATION_EMAIL="laynajoy@big-art.org";
+
+  var choices=document.querySelectorAll(".gi-choice");
+  var panels={
+    volunteer:document.getElementById("gi-panel-volunteer"),
+    donate:document.getElementById("gi-panel-donate")
+  };
+
+  function openPanel(name){
+    Object.keys(panels).forEach(function(k){
+      if(panels[k]) panels[k].classList.toggle("gi-open",k===name);
+    });
+    choices.forEach(function(c){
+      c.classList.toggle("gi-active",c.getAttribute("data-panel")===name);
+    });
+    var p=panels[name];
+    if(p){setTimeout(function(){p.scrollIntoView({behavior:"smooth",block:"nearest"});},130);}
+  }
+  window.giOpenPanel=openPanel;
+
+  choices.forEach(function(c){
+    c.addEventListener("click",function(){
+      var name=c.getAttribute("data-panel");
+      if(c.classList.contains("gi-active")){
+        if(panels[name]) panels[name].classList.remove("gi-open");
+        c.classList.remove("gi-active");
+      }else{
+        openPanel(name);
+      }
+    });
+  });
+
+  /* External triggers — e.g. tier buttons marked data-gi-open="donate".
+     Delegated so it works for elements parsed after this script. */
+  document.addEventListener("click",function(e){
+    var t=(e.target&&e.target.closest)?e.target.closest("[data-gi-open]"):null;
+    if(t){ openPanel(t.getAttribute("data-gi-open")); }
+  });
+
+  function val(form,n){var el=form.elements[n];return el?(el.value||""):"";}
+  function setStatus(el,text,kind){el.textContent=text;el.className="gi-status"+(kind?" gi-"+kind:"");}
+
+  /* ─── Volunteer form → existing Join Octopolis Google Form / Sheet ─── */
+  var volForm=document.getElementById("gi-vol-form");
+  if(volForm){
+    volForm.addEventListener("submit",function(e){
+      e.preventDefault();
+      var status=document.getElementById("gi-vol-status");
+      var btn=volForm.querySelector(".gi-submit");
+      var help=val(volForm,"help");
+      if(!help){setStatus(status,"Please pick how you'd like to help.","err");return;}
+      var fd=new FormData();
+      fd.append(VOL_FIELDS.name,val(volForm,"name"));
+      fd.append(VOL_FIELDS.email,val(volForm,"email"));
+      fd.append(VOL_FIELDS.help,help);
+      btn.disabled=true;setStatus(status,"Sending...","");
+      fetch(VOL_FORM,{method:"POST",mode:"no-cors",body:fd}).then(function(){
+        setStatus(status,"Got it — welcome aboard. The crew will be in touch.","ok");
+        volForm.reset();btn.disabled=false;
+      }).catch(function(){
+        setStatus(status,"Something went wrong — please email Octopolisproject@gmail.com.","err");
+        btn.disabled=false;
+      });
+    });
+  }
+
+  /* ─── Larger-gift form → donation Google Form (or email fallback) ─── */
+  var donForm=document.getElementById("gi-don-form");
+  if(donForm){
+    donForm.addEventListener("submit",function(e){
+      e.preventDefault();
+      var status=document.getElementById("gi-don-status");
+      var btn=donForm.querySelector(".gi-submit");
+      var name=val(donForm,"name"),email=val(donForm,"email"),
+          amount=val(donForm,"amount"),currency=val(donForm,"currency"),
+          message=val(donForm,"message");
+      if(!email||!amount){setStatus(status,"Please add your email and an amount.","err");return;}
+      if(DONATION_FORM.formId){
+        var fd=new FormData();
+        fd.append(DONATION_FORM.field_name,name);
+        fd.append(DONATION_FORM.field_email,email);
+        fd.append(DONATION_FORM.field_amount,amount);
+        fd.append(DONATION_FORM.field_currency,currency);
+        fd.append(DONATION_FORM.field_message,message);
+        btn.disabled=true;setStatus(status,"Sending...","");
+        fetch("https://docs.google.com/forms/d/e/"+DONATION_FORM.formId+"/formResponse",
+          {method:"POST",mode:"no-cors",body:fd}).then(function(){
+          setStatus(status,"Thank you — we'll be in touch within a day or two to arrange your gift.","ok");
+          donForm.reset();btn.disabled=false;
+        }).catch(function(){
+          setStatus(status,"Something went wrong — please email "+DONATION_EMAIL+".","err");
+          btn.disabled=false;
+        });
+      }else{
+        var subj="Octopolis larger gift — "+amount+" "+currency;
+        var body="Name: "+name+"\nEmail: "+email+"\nAmount: "+amount+" "+currency+"\n\nMessage:\n"+message;
+        window.location.href="mailto:"+DONATION_EMAIL+"?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body);
+        setStatus(status,"Opening your email app to send these details to our team...","ok");
+      }
+    });
+  }
+})();
+</script>
+
+<!-- ─── PATRON TIERS — relocated here, directly after Get Involved (May 2026) ─── -->
+<section id="tiers">
+  <div class="pt-wrap">
+    <p class="pt-eyebrow">Patron Tiers</p>
+    <h2 class="pt-title">Become part of the story.</h2>
+    <p class="pt-intro">Octopolis is built by people who believe art can become habitat. Choose a level of patronage &mdash; each one carries her further, from the build floor to the playa to her life as a reef. Every tier holds everything below it.</p>
+
+    <div class="pt-list">
+
+      <article class="pt-tier">
+        <div class="pt-aside">
+          <span class="pt-emoji">&#x1FAB8;</span>
+          <h3 class="pt-name">Coral</h3>
+          <p class="pt-price">$500+</p>
+        </div>
+        <div class="pt-body">
+          <ul class="pt-perks">
+            <li>Behind-the-scenes build updates from the crew &mdash; steel frame to ocean floor</li>
+            <li>A ticket to the <strong>Cephalopod Auction</strong></li>
+          </ul>
+          <a href="#get-involved" data-gi-open="donate" class="pt-btn">Become a patron &rarr;</a>
+        </div>
+      </article>
+
+      <article class="pt-tier">
+        <div class="pt-aside">
+          <span class="pt-emoji">&#x1F58B;</span>
+          <h3 class="pt-name">Ink</h3>
+          <p class="pt-price">$1,000+</p>
+        </div>
+        <div class="pt-body">
+          <ul class="pt-perks">
+            <li>Everything in <strong>Coral</strong></li>
+            <li>A ticket to the <strong>Patron Honor Soir&eacute;e</strong> on the playa</li>
+          </ul>
+          <a href="#get-involved" data-gi-open="donate" class="pt-btn">Become a patron &rarr;</a>
+        </div>
+      </article>
+
+      <article class="pt-tier">
+        <div class="pt-aside">
+          <span class="pt-emoji">&#x1F419;</span>
+          <h3 class="pt-name">Cephalopod</h3>
+          <p class="pt-price">$5,000+</p>
+        </div>
+        <div class="pt-body">
+          <ul class="pt-perks">
+            <li>Everything in <strong>Ink</strong>, with a second ticket to both the Auction and the Soir&eacute;e</li>
+            <li>A shout-out across our media channels &mdash; your name travels with Octopolis</li>
+          </ul>
+          <a href="#get-involved" data-gi-open="donate" class="pt-btn">Become a patron &rarr;</a>
+        </div>
+      </article>
+
+      <article class="pt-tier">
+        <div class="pt-aside">
+          <span class="pt-emoji">&#x2B50;</span>
+          <h3 class="pt-name">Guardian</h3>
+          <p class="pt-price">$10,000+</p>
+        </div>
+        <div class="pt-body">
+          <ul class="pt-perks">
+            <li>Everything in <strong>Cephalopod</strong></li>
+            <li>A personal welcome and guided tour of Octopolis on the playa with the crew</li>
+            <li>Your name engraved on the <strong>Patron Plaque</strong> &mdash; part of her, permanently</li>
+          </ul>
+          <a href="#get-involved" data-gi-open="donate" class="pt-btn">Become a patron &rarr;</a>
+        </div>
+      </article>
+
+      <article class="pt-tier">
+        <div class="pt-aside">
+          <span class="pt-emoji">&#x1F30A;</span>
+          <h3 class="pt-name">Sucker</h3>
+          <p class="pt-price">$20,000+</p>
+        </div>
+        <div class="pt-body">
+          <ul class="pt-perks">
+            <li>Everything in <strong>Guardian</strong></li>
+            <li>A personal message engraved into the sculpture herself</li>
+            <li>An underwater guided tour of Octopolis once she settles into her reef home</li>
+          </ul>
+          <a href="#get-involved" data-gi-open="donate" class="pt-btn">Become a patron &rarr;</a>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="pt-foot">Patron gifts of $500 or more are arranged personally &mdash; <a href="#get-involved" data-gi-open="donate">share a few details</a> and we'll follow up, including tax-deductible receipts through our fiscal sponsor.</p>
+
+    <div class="pt-notes">
+      <div class="pt-note">
+        <h4>The Cephalopod Auction</h4>
+        <p>Bid to win a piece of original art &mdash; or a piece of Octopolis herself. Auctions run throughout 2026.</p>
+      </div>
+      <div class="pt-note">
+        <h4>The Patron Honor Soir&eacute;e</h4>
+        <p>An evening with the Octopolis crew on the playa &mdash; food, drink, and art together. Burning Man, Monday, 6&ndash;9pm.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+/* ═══ PATRON TIERS ═══ */
+#tiers{padding:104px 40px 118px;position:relative;z-index:3;
+  background:radial-gradient(ellipse 72% 52% at 50% 0%,rgba(124,58,237,.10),transparent 70%),#0b0420;}
+#tiers *{box-sizing:border-box;}
+#tiers .pt-wrap{max-width:940px;margin:0 auto;}
+#tiers .pt-eyebrow{text-align:center;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;}
+#tiers .pt-title{text-align:center;font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.7rem);color:var(--text-primary);line-height:1.1;margin-bottom:16px;}
+#tiers .pt-intro{text-align:center;font-size:1.02rem;font-weight:300;color:var(--text-secondary);line-height:1.7;max-width:600px;margin:0 auto 50px;}
+#tiers .pt-list{display:flex;flex-direction:column;gap:18px;}
+#tiers .pt-tier{display:grid;grid-template-columns:228px 1fr;
+  border:1px solid var(--border-subtle);border-radius:18px;
+  background:rgba(124,58,237,.05);overflow:hidden;
+  transition:border-color .35s ease,transform .35s ease;}
+#tiers .pt-tier:hover{transform:translateY(-3px);border-color:rgba(192,38,211,.4);}
+#tiers .pt-aside{display:flex;flex-direction:column;justify-content:center;
+  padding:30px;background:rgba(124,58,237,.07);
+  border-right:1px solid var(--border-subtle);}
+#tiers .pt-emoji{font-size:1.85rem;margin-bottom:10px;}
+#tiers .pt-name{font-family:var(--font-body);font-weight:600;font-size:1.5rem;letter-spacing:-.01em;color:var(--text-primary);margin-bottom:3px;}
+#tiers .pt-price{font-size:.95rem;font-weight:600;color:var(--peach);letter-spacing:.03em;}
+#tiers .pt-body{padding:28px 32px;display:flex;flex-direction:column;gap:20px;}
+#tiers .pt-perks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px;}
+#tiers .pt-perks li{position:relative;padding-left:25px;font-size:.93rem;font-weight:300;line-height:1.55;color:var(--text-secondary);}
+#tiers .pt-perks li::before{content:"";position:absolute;left:3px;top:.52em;width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--magenta));}
+#tiers .pt-perks li strong{color:var(--text-primary);font-weight:600;}
+#tiers .pt-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;padding:13px 30px;border-radius:100px;text-decoration:none;font-size:.83rem;font-weight:600;letter-spacing:.04em;color:#fff;border:none;background:linear-gradient(135deg,var(--purple),var(--magenta));box-shadow:0 8px 22px -8px rgba(192,38,211,.55);transition:transform .25s ease,box-shadow .25s ease;}
+#tiers .pt-btn:hover{transform:translateY(-2px);box-shadow:0 13px 30px -8px rgba(192,38,211,.8);}
+#tiers .pt-foot{text-align:center;max-width:600px;margin:36px auto 0;font-size:.87rem;font-weight:300;line-height:1.65;color:var(--text-secondary);}
+#tiers .pt-foot a{color:var(--peach);text-decoration:none;font-weight:600;}
+#tiers .pt-notes{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:42px;}
+#tiers .pt-note{border:1px solid var(--border-subtle);border-radius:14px;padding:24px 26px;background:rgba(124,58,237,.05);}
+#tiers .pt-note h4{font-size:.98rem;font-weight:600;color:var(--text-primary);margin-bottom:8px;}
+#tiers .pt-note p{font-size:.85rem;font-weight:300;line-height:1.6;color:var(--text-secondary);}
+@media(max-width:760px){
+  #tiers{padding:74px 22px 86px;}
+  #tiers .pt-tier{grid-template-columns:1fr;}
+  #tiers .pt-aside{flex-direction:row;align-items:center;gap:14px;border-right:none;border-bottom:1px solid var(--border-subtle);padding:20px 24px;}
+  #tiers .pt-emoji{margin-bottom:0;}
+  #tiers .pt-body{padding:24px;}
+  #tiers .pt-notes{grid-template-columns:1fr;}
+}
+</style>
 
 <!-- ─── ABOUT ─── -->
 <section class="about section-pad" id="about">
@@ -986,7 +1426,7 @@ section {
       <div class="timeline-stop" data-stop="1">
         <div class="timeline-dot"></div>
         <div class="timeline-location">Santa Fe, NM</div>
-        <div class="timeline-status">confirmed</div>
+        <div class="timeline-status">In discussion</div>
         <div class="timeline-desc">Gallery exhibition and community events in the art capital of the Southwest.</div>
       </div>
       <div class="timeline-stop" data-stop="2">
@@ -1019,52 +1459,7 @@ section {
   </div>
 </section>
 
-<!-- ─── TIERS ─── -->
-<section class="section-pad" id="tiers">
-  <div class="container">
-    <p class="section-label reveal">Patronage Tiers</p>
-    <h2 class="section-heading reveal">Choose your level.</h2>
-    <p class="section-body reveal">Every patron gets exclusive updates as Octopolis is built, shipped, and submerged.</p>
-    <p class="section-body reveal" style="margin-top:8px;font-size:0.75rem;color:var(--text-muted);">Scroll to explore all tiers &rarr;</p>
-    <div class="tiers-grid" id="tiersGrid">
-      <div class="tier-card reveal">
-        <div class="tier-emoji">&#x1FAB8;</div>
-        <div class="tier-name">Coral</div>
-        <div class="tier-price">$500+</div>
-        <div class="tier-desc">Exclusive updates as Octopolis takes shape &mdash; build space to playa to ocean floor. Plus one ticket to the Cephalopod Auction.</div>
-        <a href="https://www.gofundme.com/f/octopolis-come-to-life" target="_blank" class="tier-btn">Donate &rarr;</a>
-      </div>
-      <div class="tier-card reveal">
-        <div class="tier-emoji">&#x1F58B;</div>
-        <div class="tier-name">Ink</div>
-        <div class="tier-price">$1,000+</div>
-        <div class="tier-desc">Everything in Coral, plus a ticket to the Patron Honor Soir&eacute;e &mdash; a private Octopolis gathering on the playa.</div>
-        <a href="https://www.gofundme.com/f/octopolis-come-to-life" target="_blank" class="tier-btn">Donate &rarr;</a>
-      </div>
-      <div class="tier-card popular reveal">
-        <div class="tier-emoji">&#x2B50;</div>
-        <div class="tier-name">Guardian</div>
-        <div class="tier-price">$10,000+</div>
-        <div class="tier-desc">VIP playa access, personalized tour, and your name engraved on the Patron Plaque &mdash; part of her permanently.</div>
-        <a href="mailto:laynajoy@big-art.org?subject=Octopolis%20Donation%20-%20%2410000+" class="tier-btn tier-btn-primary">Donate &rarr;</a>
-      </div>
-      <div class="tier-card reveal">
-        <div class="tier-emoji">&#x1F419;</div>
-        <div class="tier-name">Cephalopod</div>
-        <div class="tier-price">$5,000+</div>
-        <div class="tier-desc">Two tickets to both events plus a shoutout across our media platforms &mdash; your name travels with Octopolis.</div>
-        <a href="mailto:laynajoy@big-art.org?subject=Octopolis%20Donation%20-%20%245000+" class="tier-btn">Donate &rarr;</a>
-      </div>
-      <div class="tier-card reveal">
-        <div class="tier-emoji">&#x1F30A;</div>
-        <div class="tier-name">Sucker</div>
-        <div class="tier-price">$20,000+</div>
-        <div class="tier-desc">A personal message engraved inside Octopolis. Full VIP treatment at every event. The ultimate patron.</div>
-        <a href="mailto:laynajoy@big-art.org?subject=Octopolis%20Donation%20-%20%2420000+" class="tier-btn">Donate &rarr;</a>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ─── TIERS — relocated to directly after the Get Involved block (see #tiers above) ─── -->
 
 <!-- ─── EVENTS ─── -->
 <section class="section-pad" id="events">
@@ -1093,7 +1488,7 @@ section {
       <div class="event-card reveal">
         <div class="event-date">Burning Man &middot; Monday 6&ndash;9pm</div>
         <div class="event-name">Patron Honor Soir&eacute;e</div>
-        <div class="event-desc">A private Octopolis gathering on the playa. Food, beverage, and art with the Octopolis team.</div>
+        <div class="event-desc">An evening with the Octopolis crew on the playa &mdash; food, beverage, and art together.</div>
         <a href="#" class="event-link">RSVP &rarr;</a>
       </div>
     </div>
@@ -1110,13 +1505,10 @@ section {
       <p class="section-body reveal">Octopolis is built by dreamers, makers, welders, painters, engineers, musicians, and everyone in between. Whether you can swing a hammer or spin a story, there&rsquo;s a place for you.</p>
       <p class="section-body reveal" style="margin-top:16px;">We need hands for the build, minds for the plan, and hearts for the mission. Located across the US and beyond, our crew works both on-site and remotely.</p>
     </div>
-    <form class="vol-form" onsubmit="submitVolunteer(event)">
-      <input type="text" name="name" class="vol-input reveal" placeholder="Name" required>
-      <input type="email" name="email" class="vol-input reveal" placeholder="Email" required>
-      <input type="tel" name="phone" class="vol-input reveal" placeholder="Phone Number">
-      <textarea name="ideas" class="vol-textarea reveal" placeholder="What are your ideas?"></textarea>
-      <button type="submit" class="vol-submit reveal">Apply to Volunteer</button>
-    </form>
+    <div class="vol-form">
+      <p class="section-body reveal" style="margin-bottom:22px;">Ready to jump in? Tell us your skills and ideas in the form at the top of the page &mdash; it takes about a minute and goes straight to the crew.</p>
+      <a href="#get-involved" data-gi-open="volunteer" class="vol-submit reveal" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">Tell us how you'd like to help &rarr;</a>
+    </div>
   </div>
 </section>
 
@@ -1359,33 +1751,7 @@ section {
     }
   });
 
-  // ─── HERO PARALLAX ───
-  const heroBg = document.getElementById('heroBg');
-  if (heroBg) {
-    // Mouse parallax
-    document.querySelector('.hero').addEventListener('mousemove', (e) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      gsap.to(heroBg, {
-        x: x * -30,
-        y: y * -20,
-        duration: 1,
-        ease: 'power2.out',
-      });
-    });
-    // Scroll parallax
-    gsap.to(heroBg, {
-      y: 120,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      }
-    });
-  }
+  // ─── HERO PARALLAX removed — the octopus draw-on animation carries the hero ───
 
   // ─── REVEAL ANIMATIONS ───
   gsap.utils.toArray('.reveal').forEach((el) => {
@@ -1504,40 +1870,7 @@ section {
     });
   }
 
-  // ─── TIER CARDS STAGGER + CENTER POPULAR ───
-  const tiersGrid = document.getElementById('tiersGrid');
-  gsap.utils.toArray('.tier-card').forEach((card, i) => {
-    gsap.to(card, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      delay: i * 0.1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: card,
-        start: 'top 90%',
-      }
-    });
-  });
-  // Center the popular card on first scroll-in
-  if (tiersGrid) {
-    const popularCard = tiersGrid.querySelector('.tier-card.popular');
-    if (popularCard) {
-      ScrollTrigger.create({
-        trigger: tiersGrid,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-          setTimeout(() => {
-            const containerRect = tiersGrid.getBoundingClientRect();
-            const cardRect = popularCard.getBoundingClientRect();
-            const scrollLeft = popularCard.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
-            tiersGrid.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-          }, 600);
-        }
-      });
-    }
-  }
+  // ─── TIER CARDS — the patron tiers section is now static markup (see #tiers) ───
 
   // ─── VOLUNTEER FORM ───
   window.submitVolunteer = function(e) {
@@ -1567,5 +1900,179 @@ section {
   if (btn && links) btn.addEventListener("click", function(){ links.classList.toggle("open"); });
 })();
 </script>
+<!-- ═══ NEWSLETTER POPUP — Big Art / Octopolis (added May 2026) ═══════════════
+     A floating "Follow the journey" tab on every page that opens a sign-up card.
+     TO ACTIVATE MAILCHIMP: paste your embedded-form action URL into
+     NEWSLETTER.mailchimpUrl below. See 4_Newsletter_Popup_Setup.md in this folder.
+============================================================================ -->
+<div id="octo-news">
+  <button id="octo-news-tab" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="octo-news-card">
+    <span class="octo-news-ico" aria-hidden="true">&#10022;</span>
+    <span class="octo-news-tab-txt">Follow the journey</span>
+  </button>
+  <div id="octo-news-card" role="dialog" aria-label="Follow the Octopolis journey" hidden>
+    <button id="octo-news-x" type="button" aria-label="Close">&times;</button>
+    <p class="octo-news-eyebrow">The Octopolis Newsletter</p>
+    <h3 class="octo-news-h">Follow her journey.</h3>
+    <p class="octo-news-p">From the desert to the ocean floor &mdash; build updates, events, and the story as it unfolds. No noise, just the dive.</p>
+    <form id="octo-news-form" novalidate>
+      <input type="email" id="octo-news-email" name="EMAIL" placeholder="you@email.com" autocomplete="email" required>
+      <button type="submit" id="octo-news-go">Subscribe &rarr;</button>
+    </form>
+    <p id="octo-news-status" class="octo-news-status" role="status"></p>
+  </div>
+</div>
+<style>
+#octo-news,#octo-news *{box-sizing:border-box;margin:0;}
+#octo-news{position:fixed;right:22px;bottom:22px;z-index:100000;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+#octo-news-tab{display:flex;align-items:center;gap:9px;margin-left:auto;
+  padding:13px 22px;border:none;border-radius:100px;cursor:pointer;
+  color:#fff;font-family:inherit;font-size:.82rem;font-weight:600;letter-spacing:.02em;
+  background:linear-gradient(135deg,#7c3aed,#c026d3);
+  box-shadow:0 12px 34px -10px rgba(124,58,237,.85);
+  transition:transform .25s ease,box-shadow .25s ease;}
+#octo-news-tab:hover{transform:translateY(-3px);box-shadow:0 16px 40px -10px rgba(192,38,211,.95);}
+.octo-news-ico{font-size:.95rem;line-height:1;}
+#octo-news.is-open #octo-news-tab{display:none;}
+#octo-news-card{position:relative;width:356px;max-width:calc(100vw - 40px);
+  margin-top:12px;padding:44px 30px 32px;border-radius:20px;
+  border:1px solid rgba(124,58,237,.42);
+  background:linear-gradient(168deg,#1a0b3d 0%,#0d0520 78%);
+  box-shadow:0 34px 80px -22px rgba(0,0,0,.85);cursor:auto;
+  animation:octoNewsUp .4s cubic-bezier(.16,1,.3,1);}
+@keyframes octoNewsUp{from{opacity:0;transform:translateY(20px) scale(.96);}to{opacity:1;transform:none;}}
+#octo-news-x{position:absolute;top:11px;right:13px;width:30px;height:30px;
+  border:none;background:none;cursor:pointer;color:rgba(241,232,255,.45);
+  font-size:1.55rem;line-height:1;border-radius:50%;
+  transition:color .2s,background .2s;}
+#octo-news-x:hover{color:#f1e8ff;background:rgba(124,58,237,.2);}
+.octo-news-eyebrow{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;
+  color:#f9a8d4;margin-bottom:18px;}
+.octo-news-h{font-family:'Princess Sofia',var(--font-display,cursive);
+  font-size:1.95rem;font-weight:400;color:#f1e8ff;line-height:1.36;margin-bottom:14px;}
+.octo-news-p{font-size:.85rem;font-weight:300;line-height:1.62;
+  color:rgba(241,232,255,.64);margin-bottom:18px;}
+#octo-news-form{display:flex;flex-direction:column;gap:10px;}
+#octo-news-email{width:100%;padding:12px 15px;border-radius:10px;
+  font-family:inherit;font-size:.92rem;cursor:text;
+  background:rgba(0,0,0,.35);border:1px solid rgba(124,58,237,.42);color:#f1e8ff;}
+#octo-news-email::placeholder{color:rgba(241,232,255,.36);}
+#octo-news-email:focus{outline:none;border-color:#c026d3;
+  box-shadow:0 0 0 3px rgba(192,38,211,.18);}
+#octo-news-go{padding:12px 18px;border:none;border-radius:100px;cursor:pointer;
+  font-family:inherit;font-size:.84rem;font-weight:600;letter-spacing:.03em;color:#fff;
+  background:linear-gradient(135deg,#7c3aed,#c026d3);transition:transform .2s ease;}
+#octo-news-go:hover{transform:translateY(-2px);}
+#octo-news-go:disabled{opacity:.6;cursor:default;transform:none;}
+.octo-news-status{margin-top:11px;min-height:1.1em;font-size:.79rem;
+  line-height:1.5;color:rgba(241,232,255,.55);}
+.octo-news-status.ok{color:#5eead4;}
+.octo-news-status.err{color:#fda4af;}
+@media(max-width:560px){
+  #octo-news{right:14px;bottom:14px;}
+  .octo-news-tab-txt{display:none;}
+  #octo-news-tab{padding:15px;}
+  .octo-news-ico{font-size:1.2rem;}
+}
+</style>
+<script>
+(function(){
+  "use strict";
+  /* ───── MAILCHIMP — paste your embedded-form action URL between the quotes.
+     Mailchimp → Audience → Sign-up forms → Embedded forms → copy the URL inside
+     <form action="...">.  It looks like:
+     https://big-art.us21.list-manage.com/subscribe/post?u=abc123&id=def456
+     Leave it blank and sign-ups fall back to an email to the team. ───── */
+  var NEWSLETTER = {
+    mailchimpUrl: "https://gmail.us1.list-manage.com/subscribe/post?u=5a6738ccb3433733057f8164d&id=1ca9a93ed1",
+    fallbackEmail: "octopolisproject@gmail.com"
+  };
+
+  var SEEN = "octo_news_seen", DELAY = 9000, SCROLL_AT = 0.30;
+  var root = document.getElementById("octo-news");
+  if(!root) return;
+  var tab = document.getElementById("octo-news-tab"),
+      card = document.getElementById("octo-news-card"),
+      xBtn = document.getElementById("octo-news-x"),
+      form = document.getElementById("octo-news-form"),
+      email = document.getElementById("octo-news-email"),
+      status = document.getElementById("octo-news-status"),
+      go = document.getElementById("octo-news-go");
+
+  function seen(){try{return localStorage.getItem(SEEN)==="1";}catch(e){return false;}}
+  function remember(){try{localStorage.setItem(SEEN,"1");}catch(e){}}
+
+  function openCard(){
+    card.hidden=false; root.classList.add("is-open");
+    tab.setAttribute("aria-expanded","true");
+  }
+  function closeCard(){
+    card.hidden=true; root.classList.remove("is-open");
+    tab.setAttribute("aria-expanded","false"); remember();
+  }
+  tab.addEventListener("click",openCard);
+  xBtn.addEventListener("click",closeCard);
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape" && !card.hidden) closeCard();
+  });
+
+  /* auto-open once per visitor — by timer or by scroll depth, whichever first */
+  if(!seen()){
+    var done=false;
+    var timer=setTimeout(function(){if(!done){done=true;openCard();}},DELAY);
+    window.addEventListener("scroll",function onScroll(){
+      var el=document.documentElement;
+      var depth=el.scrollTop/((el.scrollHeight-el.clientHeight)||1);
+      if(depth>=SCROLL_AT && !done){
+        done=true; clearTimeout(timer); openCard();
+        window.removeEventListener("scroll",onScroll);
+      }
+    },{passive:true});
+  }
+
+  function say(msg,kind){status.textContent=msg;status.className="octo-news-status"+(kind?" "+kind:"");}
+
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    var addr=(email.value||"").trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(addr)){say("Please enter a valid email.","err");return;}
+    go.disabled=true; say("Subscribing…","");
+
+    if(NEWSLETTER.mailchimpUrl){
+      /* Mailchimp blocks CORS, so submit via JSONP (post-json + callback) */
+      var cb="octoMC"+Date.now();
+      var u=NEWSLETTER.mailchimpUrl;
+      if(u.indexOf("/post-json")<0) u=u.replace("/post","/post-json");
+      u += (u.indexOf("?")>-1?"&":"?")+"EMAIL="+encodeURIComponent(addr)+"&c="+cb;
+      var s=document.createElement("script");
+      window[cb]=function(resp){
+        try{delete window[cb];}catch(e){window[cb]=undefined;}
+        if(s.parentNode) s.parentNode.removeChild(s);
+        if(resp && resp.result==="success"){
+          say("You're in — welcome aboard.","ok");
+          form.reset(); remember(); setTimeout(closeCard,2800);
+        }else{
+          say(resp&&resp.msg?resp.msg.replace(/^\d+\s*-\s*/,""):"Hmm — please try again in a moment.","err");
+          go.disabled=false;
+        }
+      };
+      s.onerror=function(){
+        try{delete window[cb];}catch(e){}
+        say("Couldn't reach the server — please try again.","err"); go.disabled=false;
+      };
+      s.src=u; document.body.appendChild(s);
+    }else{
+      /* Mailchimp not wired up yet — fall back to an email to the team */
+      window.location.href="mailto:"+NEWSLETTER.fallbackEmail
+        +"?subject="+encodeURIComponent("Newsletter signup")
+        +"&body="+encodeURIComponent("Please add me to the Octopolis newsletter: "+addr);
+      say("Opening your email app to finish — thank you.","ok");
+      remember(); go.disabled=false;
+    }
+  });
+})();
+</script>
+<!-- ═══ END NEWSLETTER POPUP ═══ -->
 </body>
 </html>

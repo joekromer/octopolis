@@ -273,5 +273,179 @@
   <script>
     document.getElementById('mobileMenu').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
   </script>
+<!-- ═══ NEWSLETTER POPUP — Big Art / Octopolis (added May 2026) ═══════════════
+     A floating "Follow the journey" tab on every page that opens a sign-up card.
+     TO ACTIVATE MAILCHIMP: paste your embedded-form action URL into
+     NEWSLETTER.mailchimpUrl below. See 4_Newsletter_Popup_Setup.md in this folder.
+============================================================================ -->
+<div id="octo-news">
+  <button id="octo-news-tab" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="octo-news-card">
+    <span class="octo-news-ico" aria-hidden="true">&#10022;</span>
+    <span class="octo-news-tab-txt">Follow the journey</span>
+  </button>
+  <div id="octo-news-card" role="dialog" aria-label="Follow the Octopolis journey" hidden>
+    <button id="octo-news-x" type="button" aria-label="Close">&times;</button>
+    <p class="octo-news-eyebrow">The Octopolis Newsletter</p>
+    <h3 class="octo-news-h">Follow her journey.</h3>
+    <p class="octo-news-p">From the desert to the ocean floor &mdash; build updates, events, and the story as it unfolds. No noise, just the dive.</p>
+    <form id="octo-news-form" novalidate>
+      <input type="email" id="octo-news-email" name="EMAIL" placeholder="you@email.com" autocomplete="email" required>
+      <button type="submit" id="octo-news-go">Subscribe &rarr;</button>
+    </form>
+    <p id="octo-news-status" class="octo-news-status" role="status"></p>
+  </div>
+</div>
+<style>
+#octo-news,#octo-news *{box-sizing:border-box;margin:0;}
+#octo-news{position:fixed;right:22px;bottom:22px;z-index:100000;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+#octo-news-tab{display:flex;align-items:center;gap:9px;margin-left:auto;
+  padding:13px 22px;border:none;border-radius:100px;cursor:pointer;
+  color:#fff;font-family:inherit;font-size:.82rem;font-weight:600;letter-spacing:.02em;
+  background:linear-gradient(135deg,#7c3aed,#c026d3);
+  box-shadow:0 12px 34px -10px rgba(124,58,237,.85);
+  transition:transform .25s ease,box-shadow .25s ease;}
+#octo-news-tab:hover{transform:translateY(-3px);box-shadow:0 16px 40px -10px rgba(192,38,211,.95);}
+.octo-news-ico{font-size:.95rem;line-height:1;}
+#octo-news.is-open #octo-news-tab{display:none;}
+#octo-news-card{position:relative;width:356px;max-width:calc(100vw - 40px);
+  margin-top:12px;padding:44px 30px 32px;border-radius:20px;
+  border:1px solid rgba(124,58,237,.42);
+  background:linear-gradient(168deg,#1a0b3d 0%,#0d0520 78%);
+  box-shadow:0 34px 80px -22px rgba(0,0,0,.85);cursor:auto;
+  animation:octoNewsUp .4s cubic-bezier(.16,1,.3,1);}
+@keyframes octoNewsUp{from{opacity:0;transform:translateY(20px) scale(.96);}to{opacity:1;transform:none;}}
+#octo-news-x{position:absolute;top:11px;right:13px;width:30px;height:30px;
+  border:none;background:none;cursor:pointer;color:rgba(241,232,255,.45);
+  font-size:1.55rem;line-height:1;border-radius:50%;
+  transition:color .2s,background .2s;}
+#octo-news-x:hover{color:#f1e8ff;background:rgba(124,58,237,.2);}
+.octo-news-eyebrow{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;
+  color:#f9a8d4;margin-bottom:18px;}
+.octo-news-h{font-family:'Princess Sofia',var(--font-display,cursive);
+  font-size:1.95rem;font-weight:400;color:#f1e8ff;line-height:1.36;margin-bottom:14px;}
+.octo-news-p{font-size:.85rem;font-weight:300;line-height:1.62;
+  color:rgba(241,232,255,.64);margin-bottom:18px;}
+#octo-news-form{display:flex;flex-direction:column;gap:10px;}
+#octo-news-email{width:100%;padding:12px 15px;border-radius:10px;
+  font-family:inherit;font-size:.92rem;cursor:text;
+  background:rgba(0,0,0,.35);border:1px solid rgba(124,58,237,.42);color:#f1e8ff;}
+#octo-news-email::placeholder{color:rgba(241,232,255,.36);}
+#octo-news-email:focus{outline:none;border-color:#c026d3;
+  box-shadow:0 0 0 3px rgba(192,38,211,.18);}
+#octo-news-go{padding:12px 18px;border:none;border-radius:100px;cursor:pointer;
+  font-family:inherit;font-size:.84rem;font-weight:600;letter-spacing:.03em;color:#fff;
+  background:linear-gradient(135deg,#7c3aed,#c026d3);transition:transform .2s ease;}
+#octo-news-go:hover{transform:translateY(-2px);}
+#octo-news-go:disabled{opacity:.6;cursor:default;transform:none;}
+.octo-news-status{margin-top:11px;min-height:1.1em;font-size:.79rem;
+  line-height:1.5;color:rgba(241,232,255,.55);}
+.octo-news-status.ok{color:#5eead4;}
+.octo-news-status.err{color:#fda4af;}
+@media(max-width:560px){
+  #octo-news{right:14px;bottom:14px;}
+  .octo-news-tab-txt{display:none;}
+  #octo-news-tab{padding:15px;}
+  .octo-news-ico{font-size:1.2rem;}
+}
+</style>
+<script>
+(function(){
+  "use strict";
+  /* ───── MAILCHIMP — paste your embedded-form action URL between the quotes.
+     Mailchimp → Audience → Sign-up forms → Embedded forms → copy the URL inside
+     <form action="...">.  It looks like:
+     https://big-art.us21.list-manage.com/subscribe/post?u=abc123&id=def456
+     Leave it blank and sign-ups fall back to an email to the team. ───── */
+  var NEWSLETTER = {
+    mailchimpUrl: "https://gmail.us1.list-manage.com/subscribe/post?u=5a6738ccb3433733057f8164d&id=1ca9a93ed1",
+    fallbackEmail: "octopolisproject@gmail.com"
+  };
+
+  var SEEN = "octo_news_seen", DELAY = 9000, SCROLL_AT = 0.30;
+  var root = document.getElementById("octo-news");
+  if(!root) return;
+  var tab = document.getElementById("octo-news-tab"),
+      card = document.getElementById("octo-news-card"),
+      xBtn = document.getElementById("octo-news-x"),
+      form = document.getElementById("octo-news-form"),
+      email = document.getElementById("octo-news-email"),
+      status = document.getElementById("octo-news-status"),
+      go = document.getElementById("octo-news-go");
+
+  function seen(){try{return localStorage.getItem(SEEN)==="1";}catch(e){return false;}}
+  function remember(){try{localStorage.setItem(SEEN,"1");}catch(e){}}
+
+  function openCard(){
+    card.hidden=false; root.classList.add("is-open");
+    tab.setAttribute("aria-expanded","true");
+  }
+  function closeCard(){
+    card.hidden=true; root.classList.remove("is-open");
+    tab.setAttribute("aria-expanded","false"); remember();
+  }
+  tab.addEventListener("click",openCard);
+  xBtn.addEventListener("click",closeCard);
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape" && !card.hidden) closeCard();
+  });
+
+  /* auto-open once per visitor — by timer or by scroll depth, whichever first */
+  if(!seen()){
+    var done=false;
+    var timer=setTimeout(function(){if(!done){done=true;openCard();}},DELAY);
+    window.addEventListener("scroll",function onScroll(){
+      var el=document.documentElement;
+      var depth=el.scrollTop/((el.scrollHeight-el.clientHeight)||1);
+      if(depth>=SCROLL_AT && !done){
+        done=true; clearTimeout(timer); openCard();
+        window.removeEventListener("scroll",onScroll);
+      }
+    },{passive:true});
+  }
+
+  function say(msg,kind){status.textContent=msg;status.className="octo-news-status"+(kind?" "+kind:"");}
+
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    var addr=(email.value||"").trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(addr)){say("Please enter a valid email.","err");return;}
+    go.disabled=true; say("Subscribing…","");
+
+    if(NEWSLETTER.mailchimpUrl){
+      /* Mailchimp blocks CORS, so submit via JSONP (post-json + callback) */
+      var cb="octoMC"+Date.now();
+      var u=NEWSLETTER.mailchimpUrl;
+      if(u.indexOf("/post-json")<0) u=u.replace("/post","/post-json");
+      u += (u.indexOf("?")>-1?"&":"?")+"EMAIL="+encodeURIComponent(addr)+"&c="+cb;
+      var s=document.createElement("script");
+      window[cb]=function(resp){
+        try{delete window[cb];}catch(e){window[cb]=undefined;}
+        if(s.parentNode) s.parentNode.removeChild(s);
+        if(resp && resp.result==="success"){
+          say("You're in — welcome aboard.","ok");
+          form.reset(); remember(); setTimeout(closeCard,2800);
+        }else{
+          say(resp&&resp.msg?resp.msg.replace(/^\d+\s*-\s*/,""):"Hmm — please try again in a moment.","err");
+          go.disabled=false;
+        }
+      };
+      s.onerror=function(){
+        try{delete window[cb];}catch(e){}
+        say("Couldn't reach the server — please try again.","err"); go.disabled=false;
+      };
+      s.src=u; document.body.appendChild(s);
+    }else{
+      /* Mailchimp not wired up yet — fall back to an email to the team */
+      window.location.href="mailto:"+NEWSLETTER.fallbackEmail
+        +"?subject="+encodeURIComponent("Newsletter signup")
+        +"&body="+encodeURIComponent("Please add me to the Octopolis newsletter: "+addr);
+      say("Opening your email app to finish — thank you.","ok");
+      remember(); go.disabled=false;
+    }
+  });
+})();
+</script>
+<!-- ═══ END NEWSLETTER POPUP ═══ -->
 </body>
 </html>
