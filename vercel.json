@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/octopolis",
+      "destination": "/octopolis.html",
+      "permanent": true
+    }
+  ]
+}
